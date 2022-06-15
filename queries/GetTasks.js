@@ -4,6 +4,7 @@ export default gql`
     query Tasks {
       tasks {
         id,
-        title
+        title,
+        validated
       }
     }`

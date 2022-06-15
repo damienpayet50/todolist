@@ -10,6 +10,7 @@ const typeDefs = gql`
   type Task {
     id: ID!
     title: String!
+    validated: Boolean!
   }
   type Success {
     success: Boolean!
@@ -17,12 +18,17 @@ const typeDefs = gql`
   type Mutation {
     createTask(task: CreateTaskInput!): Task,
     removeTask(task: RemoveTaskInput!): Success,
+    switchTask(task: SwitchTaskInput!): Success,
   }
   input CreateTaskInput {
     title: String!
   }
   input RemoveTaskInput {
     id: ID!
+  }
+  input SwitchTaskInput {
+    id: ID!,
+    validated: Boolean!
   }
 `;
 
@@ -32,6 +38,7 @@ const resolvers = {
             return database
                 .select("*")
                 .from("tasks")
+                .orderBy("validated", "asc")
                 .orderBy("id", "desc");
         }
     },
@@ -51,6 +58,19 @@ const resolvers = {
         removeTask: async (_parent, args, _context) => {
             await database.table('tasks')
                 .delete()
+                .where({
+                    id: args.task.id
+                });
+
+            return {
+                success: true
+            }
+        },
+        switchTask: async (_parent, args, _context) => {
+            await database.table('tasks')
+                .update({
+                    validated: args.task.validated
+                })
                 .where({
                     id: args.task.id
                 });

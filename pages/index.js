@@ -24,18 +24,39 @@ export default function Home({tasks}) {
         await router.replace(router.asPath);
     }
 
+    const countNotValidatedTask = tasks.filter(task => !task.validated).length;
+
     return (
         <>
-            <div className="container">
-                <h1>Ma todo liste</h1>
-                <AddTask afterAddHandle={refreshHandle}></AddTask>
-                <div class='tasks-list'>
-                    {tasks.map(task => {
-                        return (
-                            <Task data={task} afterRemoveHandle={refreshHandle}></Task>
-                        )
-                    })
-                    }
+            <div className="page-content page-container" id="page-content">
+                <div className="row container d-flex justify-content-center">
+                    <div className="col-md-12">
+                        <div className="card px-3">
+                            <div className="card-body">
+                                <h4 className="card-title">
+                                    Ma Todo Liste
+                                </h4>
+                                <div className="add-items d-flex">
+                                    <AddTask afterAddHandle={refreshHandle}></AddTask>
+                                </div>
+                                {
+                                    countNotValidatedTask > 0 ?
+                                    <p  className={'text-primary'}>Il vous reste {countNotValidatedTask} tâches à terminer</p>
+                                    : ''
+                                }
+                                <div className="list-wrapper">
+                                    <div className={'d-flex flex-column'}>
+                                        {tasks.map(task => {
+                                            return (
+                                                <Task key={task.id} data={task} afterEditHandle={refreshHandle}></Task>
+                                            )
+                                        })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

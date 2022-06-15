@@ -34,9 +34,22 @@ const AddTask = ({afterAddHandle}) => {
     }
 
     return (
-        <form>
-            <input value={taskName} onChange={taskFieldHandle}/>
-            <button disabled={taskName.toString().trim() === ''} onClick={addTaskHandle}>Ajouter</button>
+        <form className={'row w-100'}>
+            <div className={'col-md-10'}>
+                <input
+                    className={'form-control'}
+                    value={taskName}
+                    onChange={taskFieldHandle}
+                    placeholder={'Ajouter une nouvelle tâche...'}
+                />
+            </div>
+            <div className={'col-md-2'}>
+                <button
+                    className={'btn btn-primary font-weight-bold'}
+                    disabled={taskName.toString().trim() === ''}
+                    onClick={addTaskHandle}
+                >Ajouter</button>
+            </div>
         </form>
     )
 }

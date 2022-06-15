@@ -12,6 +12,7 @@
     "@apollo/client": "^3.6.8",
     "apollo-server-micro": "^3.8.2",
     "dataloader": "^2.1.0",
+    "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
     "knex": "^2.1.0",
     "micro": "^9.3.4",
