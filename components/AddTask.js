@@ -2,7 +2,7 @@ import {useMutation} from "@apollo/client";
 import {useState} from "react";
 import CreateTask from "../queries/CreateTask";
 
-const AddTask = () => {
+const AddTask = ({afterAddHandle}) => {
 
     const [taskName, setTaskName] = useState('');
 
@@ -19,6 +19,7 @@ const AddTask = () => {
         if (taskName.toString().trim() !== '') {
             await createTask();
             setTaskName('');
+            afterAddHandle();
         }
     }
 

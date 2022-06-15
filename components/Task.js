@@ -1,7 +1,7 @@
 import {useMutation} from "@apollo/client";
 import RemoveTask from "../queries/RemoveTask";
 
-const Task = ({ data }) => {
+const Task = ({ data, afterRemoveHandle }) => {
 
     const [removeTask] = useMutation(RemoveTask, {
         variables: {
@@ -11,9 +11,14 @@ const Task = ({ data }) => {
         }
     });
 
+    const removeHandle = async () => {
+        await removeTask();
+        afterRemoveHandle();
+    }
+
     return (
         <div>
-            <p>{data.title} <span onClick={removeTask}>Supprimer</span></p>
+            <p>{data.title} <span onClick={removeHandle}>Supprimer</span></p>
         </div>
     )
 }
